@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/tasksFragment">
+
+    <fragment
+        android:id="@+id/tasksFragment"
+        android:name="com.destructo.dayist.ui.tasks.TasksFragment"
+        android:label="fragment_tasks"
+        tools:layout="@layout/fragment_tasks" >
+        <action
+            android:id="@+id/action_tasksFragment_to_addNewTaskFragment"
+            app:destination="@id/addNewTaskFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_tasksFragment_to_editFragment"
+            app:destination="@id/editFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewTaskFragment"
+        android:name="com.destructo.dayist.ui.addNewTask.AddNewTaskFragment"
+        android:label="fragment_add_new_task"
+        tools:layout="@layout/fragment_add_new_task" />
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.destructo.dayist.ui.editTask.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit">
+
+        <argument android:name="editTask"
+            app:argType="com.destructo.dayist.repository.Task"/>
+    </fragment>
+</navigation>

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Dayist</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="extended_fab_label">Add New Task</string>
+    <string name="add_task_content_desc">Adds a new task to the list</string>
+    <string name="description_text">Description</string>
+    <string name="title_text">Title</string>
+    <string name="welcome_text">Hi, Welcome back!</string>
+    <string name="place_holder_text">You have 5 tasks remaining.</string>
 </resources>
