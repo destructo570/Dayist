@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.addCallback
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.destructo.dayist.databinding.FragmentAddNewTaskBinding
 import com.destructo.dayist.databinding.FragmentAddNewTaskBinding.inflate
@@ -16,13 +17,14 @@ import com.destructo.dayist.repository.Task
 import com.destructo.dayist.repository.TaskDatabase
 import com.destructo.dayist.util.showSoftKeyboard
 import com.destructo.dayist.viewmodel.TaskViewModel
-import com.destructo.dayist.viewmodel.TaskViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_new_task.*
 
+@AndroidEntryPoint
 class AddNewTaskFragment : Fragment() {
 
     lateinit var binding:FragmentAddNewTaskBinding
-    lateinit var taskViewModel:TaskViewModel
+    val taskViewModel:TaskViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,14 +43,6 @@ class AddNewTaskFragment : Fragment() {
         binding = inflate(inflater)
 
         setLayoutFocus()
-
-        val application = requireNotNull(activity).application
-
-        val database = TaskDatabase.getInstance(application).taskDatabaseDao
-
-        val taskViewModelFactory = TaskViewModelFactory(database, application)
-
-        taskViewModel = ViewModelProvider(this, taskViewModelFactory).get(TaskViewModel::class.java)
 
         binding.lifecycleOwner = this
 
