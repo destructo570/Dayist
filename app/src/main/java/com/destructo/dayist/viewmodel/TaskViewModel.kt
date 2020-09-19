@@ -1,22 +1,18 @@
 package com.destructo.dayist.viewmodel
 
 import android.app.Application
-import android.util.Log
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.destructo.dayist.repository.Task
 import com.destructo.dayist.repository.TaskDatabaseDao
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
-import javax.inject.Inject
 
-class TaskViewModel
-    @ViewModelInject
-    constructor(
-        @Assisted
-        val savedStateHandle: SavedStateHandle,
-        private var database: TaskDatabaseDao): ViewModel (){
+class TaskViewModel(
+
+    private val database: TaskDatabaseDao,
+    application: Application): AndroidViewModel(application) {
 
     private val viewModelJob = Job()
     private val uiScope = CoroutineScope(viewModelJob + Dispatchers.Main)

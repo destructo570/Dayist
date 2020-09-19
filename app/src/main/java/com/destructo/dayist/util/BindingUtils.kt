@@ -4,9 +4,9 @@ import android.text.TextUtils
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.destructo.dayist.adapter.SimpleAdapter
 import com.destructo.dayist.adapter.TaskAdapter
 import com.destructo.dayist.repository.Task
-import com.destructo.dayist.viewmodel.TaskViewModel
 
 
 @BindingAdapter("taskTitle")
@@ -29,8 +29,7 @@ fun TextView.taskDescription(item:Task?){
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Task>?){
     data?.let{
         val adapter = recyclerView.adapter as TaskAdapter
-    adapter.addHeaderAndSubmitList(it)
+    adapter.submitList(it)
     }
 }
-
 

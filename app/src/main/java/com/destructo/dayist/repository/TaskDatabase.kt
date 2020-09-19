@@ -12,5 +12,25 @@ abstract class TaskDatabase: RoomDatabase() {
 
     companion object{
 
+        @Volatile
+        private var INSTANCE:TaskDatabase? = null
+
+        fun getInstance(context: Context): TaskDatabase {
+            synchronized(this){
+                var instance = INSTANCE
+
+                if (instance == null){
+                    instance = Room.databaseBuilder(
+                                context.applicationContext,
+                                TaskDatabase::class.java,
+                                "user_task_database"
+                    )
+                        .fallbackToDestructiveMigration()
+                        .build()
+                    INSTANCE = instance
+                }
+                return instance
+            }
+        }
     }
 }

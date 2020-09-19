@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "tasks_table")
 data class Task (
     @PrimaryKey(autoGenerate = true)
-    val taskId:Long=0,
+    val taskId:Long = 0,
     @ColumnInfo(name="task_title")
     val taskTitle:String,
     @ColumnInfo(name = "task_description")

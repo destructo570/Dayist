@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -16,14 +15,14 @@ import com.destructo.dayist.repository.Task
 import com.destructo.dayist.repository.TaskDatabase
 import com.destructo.dayist.util.showSoftKeyboard
 import com.destructo.dayist.viewmodel.TaskViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import com.destructo.dayist.viewmodel.TaskViewModelFactory
 import kotlinx.android.synthetic.main.fragment_add_new_task.*
 import kotlinx.android.synthetic.main.fragment_edit.*
 
-@AndroidEntryPoint
 class EditFragment : Fragment() {
 
-    val taskViewModel:TaskViewModel by viewModels()
+
+    lateinit var taskViewModel:TaskViewModel
     lateinit var editTaskArg: Task
     lateinit var binding:FragmentEditBinding
 
@@ -42,6 +41,11 @@ class EditFragment : Fragment() {
             editTaskTitle.setText(editTaskArg.taskTitle)
             editTaskDescription.setText(editTaskArg.taskDescription)
         }
+
+        val application = requireNotNull(this.activity).application
+        val taskDatabaseDao = TaskDatabase.getInstance(application).taskDatabaseDao
+        val taskViewModelFactory = TaskViewModelFactory(taskDatabaseDao, application)
+        taskViewModel = ViewModelProvider(this, taskViewModelFactory).get(TaskViewModel::class.java)
 
         return binding.root
     }

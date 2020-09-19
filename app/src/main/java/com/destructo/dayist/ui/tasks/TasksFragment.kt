@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDirections
@@ -21,14 +20,16 @@ import com.destructo.dayist.databinding.FragmentTasksBinding
 import com.destructo.dayist.repository.Task
 import com.destructo.dayist.repository.TaskDatabase
 import com.destructo.dayist.viewmodel.TaskViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import com.destructo.dayist.viewmodel.TaskViewModelFactory
 import kotlinx.android.synthetic.main.fragment_tasks.*
 
-@AndroidEntryPoint
 class TasksFragment : Fragment(), TaskEditListener {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
-    private val taskViewModel: TaskViewModel by viewModels()
+    private lateinit var taskViewModel: TaskViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +39,14 @@ class TasksFragment : Fragment(), TaskEditListener {
         val binding:FragmentTasksBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_tasks, container, false)
 
+        val application = requireNotNull(this.activity).application
+
+        val dataSource = TaskDatabase.getInstance(application).taskDatabaseDao
+
+        val taskViewModelFactory = TaskViewModelFactory(dataSource, application)
+
+        taskViewModel = ViewModelProvider(this, taskViewModelFactory).get(TaskViewModel::class.java)
+
         binding.lifecycleOwner = this
 
         binding.taskViewModel = taskViewModel
@@ -46,11 +55,20 @@ class TasksFragment : Fragment(), TaskEditListener {
             addTaskFab.findNavController().navigate(R.id.action_tasksFragment_to_addNewTaskFragment)
         }
 
-       // insertDummyData()
+        taskViewModel.userTaskList.observe(viewLifecycleOwner, Observer {taskList->
+                task_remaining_text.text = "You have ${taskList.size} tasks remaining."
+        })
+
+        //insertDummyData()
 
         binding.taskRecycler.adapter =  TaskAdapter(this,TaskClickListener {taskId->
          taskViewModel.deleteTaskFromDatabase(taskId)
         })
+
+        //binding.taskRecycler.itemAnimator = null
+//        binding.taskRecycler.adapter =  SimpleAdapter(SimpleTaskClickListener { taskId->
+//            taskViewModel.deleteTaskFromDatabase(taskId)
+//        })
 
 
         taskViewModel.editTaskNavigation.observe(viewLifecycleOwner, Observer {
@@ -66,15 +84,17 @@ class TasksFragment : Fragment(), TaskEditListener {
 
     override fun onClick(position: Int) {
         taskViewModel.onEditNavigation(position)
+
     }
 
     //Call this function anywhere to add dummy data.
     fun insertDummyData(){
-        var i = 0
-       while (i<=40){
+        var i:Int = 0
+       while (i<40){
            val task = Task(
                taskTitle = "Test ${i}",
-               taskDescription = "Test Desc ${i}")
+               taskDescription = "Test Desc ${i}"
+           )
             taskViewModel.addTaskToDatabase(task)
            i++
         }
