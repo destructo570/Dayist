@@ -4,7 +4,6 @@ import android.text.TextUtils
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.destructo.dayist.adapter.SimpleAdapter
 import com.destructo.dayist.adapter.TaskAdapter
 import com.destructo.dayist.repository.Task
 

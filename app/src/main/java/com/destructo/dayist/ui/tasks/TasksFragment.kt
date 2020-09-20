@@ -65,11 +65,6 @@ class TasksFragment : Fragment(), TaskEditListener {
          taskViewModel.deleteTaskFromDatabase(taskId)
         })
 
-        //binding.taskRecycler.itemAnimator = null
-//        binding.taskRecycler.adapter =  SimpleAdapter(SimpleTaskClickListener { taskId->
-//            taskViewModel.deleteTaskFromDatabase(taskId)
-//        })
-
 
         taskViewModel.editTaskNavigation.observe(viewLifecycleOwner, Observer {
             if(null != it){
