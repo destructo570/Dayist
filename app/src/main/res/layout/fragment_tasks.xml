@@ -11,16 +11,27 @@
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <androidx.core.widget.NestedScrollView
+    android:layout_height="match_parent"
+    >
+
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:background="#FFFFFF">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="#FFFFFF"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:fitsSystemWindows="true"
         tools:context=".ui.tasks.TasksFragment">
 
         <TextView
@@ -42,6 +53,17 @@
             android:layout_marginTop="4dp"
             android:text="@string/place_holder_text"
             />
+    </LinearLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".ui.tasks.TasksFragment">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/task_recycler"
             android:layout_width="match_parent"
@@ -50,13 +72,11 @@
             android:clipToPadding="false"
             android:paddingTop="16dp"
             android:overScrollMode="never"
-            android:nestedScrollingEnabled="false"
             app:submitTaskList="@{taskViewModel.userTaskList}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-             />
+            />
+        </LinearLayout>
 
-    </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/add_task_fab"
@@ -74,5 +94,7 @@
         android:layout_gravity="bottom|center"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
              />
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
