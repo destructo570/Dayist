@@ -29,6 +29,7 @@ class TaskAdapter(private val taskEditListener:TaskEditListener,
             binding.task = task
             binding.taskListener = taskListener
             binding.itemViewId.setOnClickListener(this)
+             if(binding.checkBox.isChecked) binding.checkBox.isChecked=false
         }
 
         override fun onClick(v: View?) {
@@ -42,6 +43,7 @@ class TaskAdapter(private val taskEditListener:TaskEditListener,
 
     override fun onBindViewHolder(holder: TaskAdapter.ViewHolder, position: Int) {
         holder.bind(getItem(position), taskListener)
+
     }
 }
 
