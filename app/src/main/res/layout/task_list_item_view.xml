@@ -70,8 +70,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-
+                android:button="@drawable/custom_checkbox_selector"
                 android:onClick="@{() -> taskListener.onClick(task)}"
+                android:buttonTint="@color/colorPrimary"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
