@@ -30,13 +30,15 @@ class TasksFragment : Fragment(), TaskEditListener {
     }
 
     private lateinit var taskViewModel: TaskViewModel
+    private lateinit var binding: FragmentTasksBinding
+    private var currentVisiblePosition: Long = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding:FragmentTasksBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_tasks, container, false)
 
         val application = requireNotNull(this.activity).application
@@ -65,7 +67,6 @@ class TasksFragment : Fragment(), TaskEditListener {
          taskViewModel.deleteTaskFromDatabase(taskId)
         })
 
-
         taskViewModel.editTaskNavigation.observe(viewLifecycleOwner, Observer {
             if(null != it){
                 this.findNavController().navigate(TasksFragmentDirections.actionTasksFragmentToEditFragment(it))
@@ -80,6 +81,10 @@ class TasksFragment : Fragment(), TaskEditListener {
     override fun onClick(position: Int) {
         taskViewModel.onEditNavigation(position)
 
+    }
+
+    override fun onPause() {
+        super.onPause()
     }
 
     //Call this function anywhere to add dummy data.

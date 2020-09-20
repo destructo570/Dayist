@@ -28,6 +28,7 @@ fun TextView.taskDescription(item:Task?){
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Task>?){
     data?.let{
         val adapter = recyclerView.adapter as TaskAdapter
+        adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
     adapter.submitList(it)
     }
 }
